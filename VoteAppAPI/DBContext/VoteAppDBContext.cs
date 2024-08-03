@@ -5,7 +5,7 @@ namespace VoteAppAPI.DBContext
 {
     public class VoteAppDBContext : DbContext
     {
-        public VoteAppDBContext(DbContextOptions options) : base(options)
+        public VoteAppDBContext(DbContextOptions<VoteAppDBContext> options) : base(options)
         {
                 
         }

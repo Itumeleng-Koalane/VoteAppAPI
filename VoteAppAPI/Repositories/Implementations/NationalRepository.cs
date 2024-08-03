@@ -1,4 +1,5 @@
-﻿using VoteAppAPI.DBContext;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using VoteAppAPI.DBContext;
 using VoteAppAPI.Domain_Model;
 using VoteAppAPI.Repositories.Interfaces;
 
@@ -19,5 +20,12 @@ namespace VoteAppAPI.Repositories.Implementations
 
             return national;
         }
+
+        //public async Task<National> GetAllNationalAsync()
+        //{
+        //    var nationalVotes = dBContext.Nationals.ToList();
+
+        //    await dBContext.Nationals.FindAsync();
+        //}
     }
 }

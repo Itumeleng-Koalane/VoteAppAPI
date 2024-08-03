@@ -13,18 +13,27 @@ namespace VoteAppAPI.Controllers
     public class NationalsController : ControllerBase
     {
         private readonly INationalRepository nationalRepository;
+        private readonly VoteAppDBContext voteAppDBContext;
 
-        public NationalsController(INationalRepository nationalRepository)
+        public NationalsController(INationalRepository nationalRepository, VoteAppDBContext voteAppDBContext)
         {
             this.nationalRepository = nationalRepository;
+            this.voteAppDBContext = voteAppDBContext;
         }
 
         public INationalRepository NationalRepository { get; }
 
-        //[HttpGet]
+        [HttpGet]
+        public async Task<IActionResult> getAllNationals()
+        {
+            var nationalVotes = voteAppDBContext.Nationals.ToList();
+            return Ok(nationalVotes);
+        }
+
+        //[HttpGet("id")]
         //public async Task<IActionResult> getNational(int id)
         //{
-        //    return Ok(id);
+
         //}
 
         [HttpPost]
