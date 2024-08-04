@@ -6,10 +6,10 @@ namespace VoteAppAPI.Domain_Model
     {
         public string PartyNameProvincial { get; set; }
         [Key]
-        public int Idnumber { get; set; }
-        [Required]
+        public long Idnumber { get; set; }
+        [MaxLength(13)]
+        public string IdentificationNumber { get; set; }
         public string Name { get; set; }
-        [Required]
         public string Surname { get; set; }
         public DateTime CreatedDate { get; set; }
     }

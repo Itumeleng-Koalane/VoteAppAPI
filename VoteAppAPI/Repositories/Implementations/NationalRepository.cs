@@ -20,12 +20,5 @@ namespace VoteAppAPI.Repositories.Implementations
 
             return national;
         }
-
-        //public async Task<National> GetAllNationalAsync()
-        //{
-        //    var nationalVotes = dBContext.Nationals.ToList();
-
-        //    await dBContext.Nationals.FindAsync();
-        //}
     }
 }

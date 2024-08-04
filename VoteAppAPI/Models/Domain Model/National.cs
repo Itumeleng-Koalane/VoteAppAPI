@@ -6,7 +6,9 @@ namespace VoteAppAPI.Domain_Model
     {
         public string PartyNameNational { get; set; }
         [Key]
-        public int? Idnumber { get; set; }
+        public long Idnumber { get; set; }
+        [MaxLength(13)]
+        public string IdentificationNumber { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
