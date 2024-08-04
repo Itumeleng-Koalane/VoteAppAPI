@@ -1,16 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VoteAppAPI.Domain_Model
+namespace VoteAppAPI.Models.DTOs
 {
-    public class Provincial
+    public class CreateProvincialRequestDto
     {
         public string PartyNameProvincial { get; set; }
-        [Key]
         public long Idnumber { get; set; }
         [MaxLength(13)]
         public string IdentificationNumber { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

@@ -22,8 +22,6 @@ namespace VoteAppAPI.Controllers
             this.voteAppDBContext = voteAppDBContext;
         }
 
-        public INationalRepository NationalRepository { get; }
-
         [HttpGet]
         public async Task<IActionResult> getAllNationals()
         {
