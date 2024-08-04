@@ -7,7 +7,7 @@ namespace VoteAppAPI.DBContext
 {
     public class RegisterAuthDBContext : IdentityDbContext<IdentityUser>
     {
-        public RegisterAuthDBContext(DbContextOptions options) : base(options)
+        public RegisterAuthDBContext(DbContextOptions<RegisterAuthDBContext> options) : base(options)
         {
 
         }

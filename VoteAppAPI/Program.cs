@@ -24,6 +24,7 @@ builder.Services.AddDbContext<RegisterAuthDBContext>(options =>
 
 builder.Services.AddScoped<INationalRepository, NationalRepository>();
 builder.Services.AddScoped<IProvincialRepository, ProvincialRepository>();
+builder.Services.AddScoped<IRegistrationRepository, RegisterRepository>();
 
 var app = builder.Build();
 
