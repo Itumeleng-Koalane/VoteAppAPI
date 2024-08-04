@@ -4,6 +4,6 @@ namespace VoteAppAPI.Repositories.Interfaces
 {
     public interface INationalRepository
     {
-        Task<National> CreateNationalAsync(National national); 
+        Task<National> CreateNationalAsync(National national);
     }
 }

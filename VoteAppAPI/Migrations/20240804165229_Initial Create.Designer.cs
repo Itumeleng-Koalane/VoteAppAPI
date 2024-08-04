@@ -12,7 +12,7 @@ using VoteAppAPI.DBContext;
 namespace VoteAppAPI.Migrations
 {
     [DbContext(typeof(VoteAppDBContext))]
-    [Migration("20240731155153_Initial Create")]
+    [Migration("20240804165229_Initial Create")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,17 +27,25 @@ namespace VoteAppAPI.Migrations
 
             modelBuilder.Entity("VoteAppAPI.Domain_Model.National", b =>
                 {
-                    b.Property<string>("PartyNameNational")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Idnumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Idnumber"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Idnumber")
+                    b.Property<string>("IdentificationNumber")
+                        .IsRequired()
                         .HasMaxLength(13)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PartyNameNational")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -45,24 +53,32 @@ namespace VoteAppAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PartyNameNational");
+                    b.HasKey("Idnumber");
 
                     b.ToTable("Nationals");
                 });
 
             modelBuilder.Entity("VoteAppAPI.Domain_Model.Provincial", b =>
                 {
-                    b.Property<string>("PartyNameProvincial")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<long>("Idnumber")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Idnumber"));
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Idnumber")
+                    b.Property<string>("IdentificationNumber")
+                        .IsRequired()
                         .HasMaxLength(13)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PartyNameProvincial")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -70,35 +86,9 @@ namespace VoteAppAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PartyNameProvincial");
+                    b.HasKey("Idnumber");
 
                     b.ToTable("Provinces");
-                });
-
-            modelBuilder.Entity("VoteAppAPI.Domain_Model.Register", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Idnumber")
-                        .HasMaxLength(13)
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Registers");
                 });
 #pragma warning restore 612, 618
         }

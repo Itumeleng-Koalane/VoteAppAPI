@@ -15,45 +15,34 @@ namespace VoteAppAPI.Migrations
                 name: "Nationals",
                 columns: table => new
                 {
-                    PartyNameNational = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Idnumber = table.Column<int>(type: "int", maxLength: 13, nullable: false),
+                    Idnumber = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PartyNameNational = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdentificationNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Nationals", x => x.PartyNameNational);
+                    table.PrimaryKey("PK_Nationals", x => x.Idnumber);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Provinces",
                 columns: table => new
                 {
-                    PartyNameProvincial = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Idnumber = table.Column<int>(type: "int", maxLength: 13, nullable: false),
+                    Idnumber = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PartyNameProvincial = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdentificationNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Provinces", x => x.PartyNameProvincial);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Registers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Idnumber = table.Column<int>(type: "int", maxLength: 13, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Registers", x => x.Id);
+                    table.PrimaryKey("PK_Provinces", x => x.Idnumber);
                 });
         }
 
@@ -65,9 +54,6 @@ namespace VoteAppAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Provinces");
-
-            migrationBuilder.DropTable(
-                name: "Registers");
         }
     }
 }

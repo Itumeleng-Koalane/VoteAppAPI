@@ -4,14 +4,12 @@ namespace VoteAppAPI.Domain_Model
 {
     public class Provincial
     {
-        [Key]
         public string PartyNameProvincial { get; set; }
-        [Required]
+        [Key]
+        public long Idnumber { get; set; }
         [MaxLength(13)]
-        public int Idnumber { get; set; }
-        [Required]
+        public string IdentificationNumber { get; set; }
         public string Name { get; set; }
-        [Required]
         public string Surname { get; set; }
         public DateTime CreatedDate { get; set; }
     }

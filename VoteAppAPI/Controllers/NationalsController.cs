@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using VoteAppAPI.DBContext;
 using VoteAppAPI.Domain_Model;
 using VoteAppAPI.Models.DTOs;
@@ -13,19 +14,34 @@ namespace VoteAppAPI.Controllers
     public class NationalsController : ControllerBase
     {
         private readonly INationalRepository nationalRepository;
+        private readonly VoteAppDBContext voteAppDBContext;
 
-        public NationalsController(INationalRepository nationalRepository)
+        public NationalsController(INationalRepository nationalRepository, VoteAppDBContext voteAppDBContext)
         {
             this.nationalRepository = nationalRepository;
+            this.voteAppDBContext = voteAppDBContext;
         }
 
         public INationalRepository NationalRepository { get; }
 
-        //[HttpGet]
-        //public async Task<IActionResult> getNational(int id)
-        //{
-        //    return Ok(id);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> getAllNationals()
+        {
+            var nationalVotes = voteAppDBContext.Nationals.ToList();
+            return Ok(nationalVotes);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<National>> GetNational(long id)
+        {
+            var national = await voteAppDBContext.Nationals.FindAsync(id);
+
+            if (national == null)
+            {
+                return NotFound();
+            }
+            return national;
+        }
 
         [HttpPost]
         public async Task<IActionResult> createNational(CreateNationalRequestDto requestDto)
@@ -34,7 +50,7 @@ namespace VoteAppAPI.Controllers
             {
                 Name = requestDto.Name,
                 Surname = requestDto.Surname,
-                Idnumber = requestDto.Idnumber,
+                IdentificationNumber = requestDto.IdentificationNumber,
                 PartyNameNational = requestDto.PartyNameNational
             };
 
@@ -44,7 +60,7 @@ namespace VoteAppAPI.Controllers
             {
                 Name = national.Name,
                 Surname = national.Surname,
-                Idnumber = national.Idnumber,
+                IdentificationNumber = national.IdentificationNumber,
                 PartyNameNational = national.PartyNameNational
             };
 
