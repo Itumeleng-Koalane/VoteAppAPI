@@ -9,10 +9,10 @@ using VoteAppAPI.DBContext;
 
 #nullable disable
 
-namespace VoteAppAPI.Migrations
+namespace VoteAppAPI.Migrations.VoteAppDB
 {
     [DbContext(typeof(VoteAppDBContext))]
-    [Migration("20240804165229_Initial Create")]
+    [Migration("20240805171220_Initial Create")]
     partial class InitialCreate
     {
         /// <inheritdoc />

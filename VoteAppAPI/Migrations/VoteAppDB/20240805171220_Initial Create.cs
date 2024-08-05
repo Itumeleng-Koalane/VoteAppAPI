@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace VoteAppAPI.Migrations
+namespace VoteAppAPI.Migrations.VoteAppDB
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

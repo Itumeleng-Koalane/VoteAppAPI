@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VoteAppAPI.DBContext;
 
 #nullable disable
 
-namespace VoteAppAPI.Migrations.RegisterAuthDB
+namespace VoteAppAPI.Migrations
 {
     [DbContext(typeof(RegisterAuthDBContext))]
-    [Migration("20240804202133_Register Table")]
-    partial class RegisterTable
+    partial class RegisterAuthDBContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,6 +228,10 @@ namespace VoteAppAPI.Migrations.RegisterAuthDB
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Idnumber")
                         .IsRequired()

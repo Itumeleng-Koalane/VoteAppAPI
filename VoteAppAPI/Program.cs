@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VoteAppAPI.DBContext;
 using VoteAppAPI.Repositories.Implementations;
@@ -22,6 +23,9 @@ builder.Services.AddDbContext<RegisterAuthDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VoteAppConnectionString"));
 });
 
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<RegisterAuthDBContext>().AddDefaultTokenProviders();
+
 builder.Services.AddScoped<INationalRepository, NationalRepository>();
 builder.Services.AddScoped<IProvincialRepository, ProvincialRepository>();
 builder.Services.AddScoped<IRegistrationRepository, RegisterRepository>();
@@ -38,6 +42,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

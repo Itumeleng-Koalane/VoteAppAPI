@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace VoteAppAPI.Migrations.RegisterAuthDB
+namespace VoteAppAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class RegisterTable : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,7 @@ namespace VoteAppAPI.Migrations.RegisterAuthDB
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Idnumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
