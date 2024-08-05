@@ -8,7 +8,7 @@ using VoteAppAPI.DBContext;
 
 #nullable disable
 
-namespace VoteAppAPI.Migrations
+namespace VoteAppAPI.Migrations.VoteAppDB
 {
     [DbContext(typeof(VoteAppDBContext))]
     partial class VoteAppDBContextModelSnapshot : ModelSnapshot
