@@ -55,7 +55,7 @@ namespace VoteAppAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> createNational(CreateNationalRequestDto requestDto)
+        public async Task<IActionResult> CreateNational(CreateNationalRequestDto requestDto)
         {
             var national = new National()
             {
