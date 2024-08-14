@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoteAppAPI.DBContext;
@@ -15,15 +16,17 @@ namespace VoteAppAPI.Controllers
     {
         private readonly RegisterAuthDBContext registerAuthDBContext;
         private readonly IRegistrationRepository registrationRepository;
+        private readonly ILogger<Register> logger;
 
-        public RegistoriesController(RegisterAuthDBContext registerAuthDBContext, IRegistrationRepository registrationRepository)
+        public RegistoriesController(RegisterAuthDBContext registerAuthDBContext, IRegistrationRepository registrationRepository, ILogger<Register> logger)
         {
             this.registerAuthDBContext = registerAuthDBContext;
             this.registrationRepository = registrationRepository;
+            this.logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> getRegistryList()
+        public async Task<IActionResult> GetRegistryList()
         {
             var registryList = registerAuthDBContext.Registers.ToList();
             return Ok(registryList);
@@ -34,26 +37,38 @@ namespace VoteAppAPI.Controllers
         {
             var singleUser = await registerAuthDBContext.Registers.FindAsync(id);
 
-            if (singleUser == null)
+            try
             {
-                return NotFound();
+                if (singleUser == null)
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning($"Could not get the user {singleUser} based on an excpetion: " + ex.StackTrace);
             }
             return singleUser;
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Register>> removeUser(long id)
+        public async Task<ActionResult<Register>> RemoveUser(long id)
         {
             var singleUser = await registerAuthDBContext.Registers.FindAsync(id);
-
-            if (singleUser == null)
+            try
             {
-                return NotFound();
+                if (singleUser == null)
+                {
+                    return NotFound();
+                }
+
+                registerAuthDBContext.Registers.Remove(singleUser);
+                await registerAuthDBContext.SaveChangesAsync();
             }
-
-            registerAuthDBContext.Registers.Remove(singleUser);
-            await registerAuthDBContext.SaveChangesAsync();
-
+            catch (Exception ex)
+            {
+                logger.LogError($"Could not remove the user {singleUser} based on: " + ex.StackTrace);
+            }
             return NoContent();
         }
 
@@ -96,7 +111,7 @@ namespace VoteAppAPI.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> createRegistration([FromBody]CreateRegistrationRequestDto requestDto)
+        public async Task<IActionResult> CreateRegistration([FromBody]CreateRegistrationRequestDto requestDto)
         {
             var register = new Register()
             {
@@ -115,6 +130,9 @@ namespace VoteAppAPI.Controllers
                 Idnumber = register.Idnumber,
                 Email = register.Email,
             };
+
+            logger.LogError($"Failed to create registration for user {response}:");
+            logger.LogTrace($"{response.Idnumber}");
 
             return Ok(response);
         }
