@@ -13,17 +13,22 @@ namespace VoteAppAPI.Controllers
     {
         private readonly IProvincialRepository provincialRepository;
         private readonly VoteAppDBContext voteAppDBContext;
+        private readonly ILogger<Provincial> logger;
 
-        public ProvincialController(IProvincialRepository provincialRepository, VoteAppDBContext voteAppDBContext)
+        public ProvincialController(IProvincialRepository provincialRepository, VoteAppDBContext voteAppDBContext, ILogger<Provincial> logger)
         {
             this.provincialRepository = provincialRepository;
             this.voteAppDBContext = voteAppDBContext;
+            this.logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> getAllProvinces()
+        public async Task<IActionResult> GetAllProvinces()
         {
             var provincialVotes = voteAppDBContext.Provinces.ToList();
+
+            logger.LogError($"Could not get {provincialVotes.ToList()}");
+
             return Ok(provincialVotes);
         }
 
@@ -32,15 +37,23 @@ namespace VoteAppAPI.Controllers
         {
             var province = await voteAppDBContext.Provinces.FindAsync(id);
 
-            if (province == null)
+            try
             {
-                return NotFound();
+                if (province == null)
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Could not get {province.Idnumber}");
+                logger.LogInformation(ex.StackTrace);
             }
             return province;
         }
 
         [HttpPost]
-        public async Task<IActionResult> createProvincial(CreateProvincialRequestDto requestDto)
+        public async Task<IActionResult> CreateProvincial(CreateProvincialRequestDto requestDto)
         {
             var province = new Provincial()
             {
@@ -59,6 +72,8 @@ namespace VoteAppAPI.Controllers
                 IdentificationNumber = province.IdentificationNumber,
                 PartyNameProvincial = province.PartyNameProvincial
             };
+
+            logger.LogError($"Could not create {requestDto.Name} based on: {response}");
 
             return Ok(response);
         }

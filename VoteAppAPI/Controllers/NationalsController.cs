@@ -15,17 +15,22 @@ namespace VoteAppAPI.Controllers
     {
         private readonly INationalRepository nationalRepository;
         private readonly VoteAppDBContext voteAppDBContext;
+        private readonly ILogger<National> logger;
 
-        public NationalsController(INationalRepository nationalRepository, VoteAppDBContext voteAppDBContext)
+        public NationalsController(INationalRepository nationalRepository, VoteAppDBContext voteAppDBContext, ILogger<National> logger)
         {
             this.nationalRepository = nationalRepository;
             this.voteAppDBContext = voteAppDBContext;
+            this.logger = logger;
         }
 
         [HttpGet]
-        public async Task<IActionResult> getAllNationals()
+        public async Task<IActionResult> GetAllNationals()
         {
             var nationalVotes = voteAppDBContext.Nationals.ToList();
+
+            logger.LogError($"Could not get {nationalVotes.ToList()}");
+
             return Ok(nationalVotes);
         }
 
@@ -34,9 +39,17 @@ namespace VoteAppAPI.Controllers
         {
             var national = await voteAppDBContext.Nationals.FindAsync(id);
 
-            if (national == null)
+            try
             {
-                return NotFound();
+                if (national == null)
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Could not get {national} based on: {ex.Message}");
+                logger.LogInformation(ex.StackTrace);
             }
             return national;
         }
@@ -61,6 +74,8 @@ namespace VoteAppAPI.Controllers
                 IdentificationNumber = national.IdentificationNumber,
                 PartyNameNational = national.PartyNameNational
             };
+
+            logger.LogError($"Could not create {response.Idnumber}");
 
             return Ok(response);
         }
