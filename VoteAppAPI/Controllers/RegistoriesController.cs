@@ -33,7 +33,7 @@ namespace VoteAppAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Register>> GetSingleUser(long id)
+        public async Task<ActionResult<Register>> GetSingleUser(Guid id)
         {
             var singleUser = await registerAuthDBContext.Registers.FindAsync(id);
 
@@ -52,7 +52,7 @@ namespace VoteAppAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Register>> RemoveUser(long id)
+        public async Task<ActionResult<Register>> RemoveUser(Guid id)
         {
             var singleUser = await registerAuthDBContext.Registers.FindAsync(id);
             try
@@ -72,43 +72,43 @@ namespace VoteAppAPI.Controllers
             return NoContent();
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateUser(int id, [FromBody] Register updatedUser)
-        //{
-        //    if (id != updatedUser.Idnumber)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] Register updatedUser)
+        {
+            var user = await registerAuthDBContext.Registers.FindAsync(id);
 
-        //    var user = await registerAuthDBContext.Registers.FindAsync(id);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    // Update the properties of the found entity with the values from the input model
-        //    user.Name = updatedUser.Name;
-        //    // Update other properties here
+            // Update the properties of the found entity with the values from the input model
+            user.Name = updatedUser.Name;
+            user.Idnumber = updatedUser.Idnumber;
+            user.Surname = updatedUser.Surname;
+            user.Email = updatedUser.Email;
+            // Update other properties here
 
-        //    registerAuthDBContext.Entry(user).State = EntityState.Modified;
+            registerAuthDBContext.Entry(user).State = EntityState.Modified;
 
-        //    try
-        //    {
-        //        await registerAuthDBContext.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!registerAuthDBContext.Registers.Any(e => e.id == id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //    return NoContent();
-        //}
+            try
+            {
+                await registerAuthDBContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!registerAuthDBContext.Registers.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    logger.LogError($"Failed to create registration for user {user}:");
+                    logger.LogInformation($"{user.Idnumber}");
+                }
+            }
+            return NoContent();
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateRegistration([FromBody]CreateRegistrationRequestDto requestDto)

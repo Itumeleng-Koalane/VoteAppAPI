@@ -30,6 +30,15 @@ builder.Services.AddScoped<INationalRepository, NationalRepository>();
 builder.Services.AddScoped<IProvincialRepository, ProvincialRepository>();
 builder.Services.AddScoped<IRegistrationRepository, RegisterRepository>();
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("https://localhost:7035")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,6 +51,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 
