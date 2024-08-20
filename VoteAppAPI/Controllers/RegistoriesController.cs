@@ -87,7 +87,6 @@ namespace VoteAppAPI.Controllers
             user.Idnumber = updatedUser.Idnumber;
             user.Surname = updatedUser.Surname;
             user.Email = updatedUser.Email;
-            // Update other properties here
 
             registerAuthDBContext.Entry(user).State = EntityState.Modified;
 
