@@ -1,4 +1,4 @@
-﻿using VoteAppAPI.DBContext;
+﻿using VoteAppAPI.Data.DBContext;
 using VoteAppAPI.Domain_Model;
 using VoteAppAPI.Repositories.Interfaces;
 

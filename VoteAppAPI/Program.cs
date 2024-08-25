@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using VoteAppAPI.DBContext;
+using VoteAppAPI.Data.DBContext;
 using VoteAppAPI.Repositories.Implementations;
 using VoteAppAPI.Repositories.Interfaces;
 
