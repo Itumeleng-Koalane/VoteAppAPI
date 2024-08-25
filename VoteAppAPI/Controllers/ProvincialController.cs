@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using VoteAppAPI.DBContext;
+using VoteAppAPI.Data.DBContext;
 using VoteAppAPI.Domain_Model;
 using VoteAppAPI.Models.DTOs;
 using VoteAppAPI.Repositories.Interfaces;

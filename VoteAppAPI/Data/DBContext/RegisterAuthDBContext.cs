@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VoteAppAPI.Domain_Model;
 
-namespace VoteAppAPI.DBContext
+namespace VoteAppAPI.Data.DBContext
 {
     public class RegisterAuthDBContext : IdentityDbContext<IdentityUser>
     {
