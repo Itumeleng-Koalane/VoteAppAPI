@@ -3,21 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VoteAppAPI.Data.DBContext;
 
-
 #nullable disable
 
-namespace VoteAppAPI.Migrations.VoteAppDB
+namespace VoteAppAPI.Migrations
 {
     [DbContext(typeof(VoteAppDBContext))]
-    [Migration("20240805171220_Initial Create")]
-    partial class InitialCreate
+    partial class VoteAppDBContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,11 +24,9 @@ namespace VoteAppAPI.Migrations.VoteAppDB
 
             modelBuilder.Entity("VoteAppAPI.Domain_Model.National", b =>
                 {
-                    b.Property<long>("Idnumber")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Idnumber"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -54,18 +48,16 @@ namespace VoteAppAPI.Migrations.VoteAppDB
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Idnumber");
+                    b.HasKey("Id");
 
                     b.ToTable("Nationals");
                 });
 
             modelBuilder.Entity("VoteAppAPI.Domain_Model.Provincial", b =>
                 {
-                    b.Property<long>("Idnumber")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Idnumber"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -87,7 +79,7 @@ namespace VoteAppAPI.Migrations.VoteAppDB
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Idnumber");
+                    b.HasKey("Id");
 
                     b.ToTable("Provinces");
                 });

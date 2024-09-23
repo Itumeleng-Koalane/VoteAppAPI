@@ -6,7 +6,7 @@ namespace VoteAppAPI.Models.DTOs
     {
         public string PartyNameNational { get; set; }
         [Key]
-        public long Idnumber { get; set; }
+        public Guid Id { get; set; }
         [MaxLength(13)]
         public string IdentificationNumber { get; set; }
         public string Name { get; set; }

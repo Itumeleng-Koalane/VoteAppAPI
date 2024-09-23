@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VoteAppAPI.Data.DBContext;
+using VoteAppAPI.Domain_Model;
+using VoteAppAPI.Extensions;
 using VoteAppAPI.Repositories.Implementations;
 using VoteAppAPI.Repositories.Interfaces;
 
@@ -23,8 +25,14 @@ builder.Services.AddDbContext<RegisterAuthDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VoteAppConnectionString"));
 });
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores<RegisterAuthDBContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentityCore<Register>()
+    .AddEntityFrameworkStores<RegisterAuthDBContext>()
+    .AddDefaultTokenProviders()
+    .AddApiEndpoints();
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication()
+    .AddBearerToken(IdentityConstants.BearerScheme);
 
 builder.Services.AddScoped<INationalRepository, NationalRepository>();
 builder.Services.AddScoped<IProvincialRepository, ProvincialRepository>();
@@ -37,6 +45,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.ApplyMigrations();
 }
 
 app.UseHttpsRedirection();
@@ -54,5 +64,7 @@ app.UseCors(options =>
 app.UseAuthentication();
 
 app.MapControllers();
+
+app.MapIdentityApi<Register>();
 
 app.Run();
