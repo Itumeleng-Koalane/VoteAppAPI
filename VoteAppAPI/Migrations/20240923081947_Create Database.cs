@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace VoteAppAPI.Migrations.VoteAppDB
+namespace VoteAppAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,7 @@ namespace VoteAppAPI.Migrations.VoteAppDB
                 name: "Nationals",
                 columns: table => new
                 {
-                    Idnumber = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PartyNameNational = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdentificationNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -25,15 +24,14 @@ namespace VoteAppAPI.Migrations.VoteAppDB
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Nationals", x => x.Idnumber);
+                    table.PrimaryKey("PK_Nationals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Provinces",
                 columns: table => new
                 {
-                    Idnumber = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PartyNameProvincial = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdentificationNumber = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -42,7 +40,7 @@ namespace VoteAppAPI.Migrations.VoteAppDB
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Provinces", x => x.Idnumber);
+                    table.PrimaryKey("PK_Provinces", x => x.Id);
                 });
         }
 

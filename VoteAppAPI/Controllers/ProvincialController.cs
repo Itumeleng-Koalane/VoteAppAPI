@@ -33,7 +33,7 @@ namespace VoteAppAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Provincial>> GetProvince(long id)
+        public async Task<ActionResult<Provincial>> GetProvince(Guid id)
         {
             var province = await voteAppDBContext.Provinces.FindAsync(id);
 
@@ -46,7 +46,7 @@ namespace VoteAppAPI.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError($"Could not get {province.Idnumber}");
+                logger.LogError($"Could not get {province.IdentificationNumber}");
                 logger.LogInformation(ex.StackTrace);
             }
             return province;

@@ -35,7 +35,7 @@ namespace VoteAppAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<National>> GetNational(long id)
+        public async Task<ActionResult<National>> GetNational(Guid id)
         {
             var national = await voteAppDBContext.Nationals.FindAsync(id);
 
@@ -75,7 +75,7 @@ namespace VoteAppAPI.Controllers
                 PartyNameNational = national.PartyNameNational
             };
 
-            logger.LogError($"Could not create {response.Idnumber}");
+            logger.LogError($"Could not create {response.IdentificationNumber}");
 
             return Ok(response);
         }

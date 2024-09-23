@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace VoteAppAPI.Domain_Model
 {
-    public class Register
+    public class Register : IdentityUser
     {
         [Key]
         public Guid Id { get; set; }

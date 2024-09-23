@@ -14,8 +14,8 @@ namespace VoteAppAPI.Repositories.Implementations
         }
         public async Task<Register> CreateRegistrationAsync(Register register)
         {
-            await registerAuthDBContext.Registers.AddAsync(register);
-            await registerAuthDBContext.SaveChangesAsync();
+            //await registerAuthDBContext.Registers.AddAsync(register);
+            //await registerAuthDBContext.SaveChangesAsync();
 
             return register;
         }
