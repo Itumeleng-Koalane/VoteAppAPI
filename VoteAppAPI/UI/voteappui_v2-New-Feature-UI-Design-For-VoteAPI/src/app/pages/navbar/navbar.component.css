@@ -1,0 +1,18 @@
+/* Custom Navbar Styles */
+.navbar .navbar-brand,
+.navbar .navbar-nav .nav-link,
+.navbar .navbar-toggler-icon {
+    color: #750a06; /* Set the text color to white for contrast */
+    font-weight: bolder;
+}
+
+.navbar .btn-outline-success {
+    color: #6d1515;
+    border-color: #470f0f;
+}
+
+.navbar .btn-outline-success:hover {
+    background-color: #520e0e;
+    color: #750a06;
+    border-color: #530c0c;
+}

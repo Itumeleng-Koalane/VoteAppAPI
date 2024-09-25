@@ -32,6 +32,7 @@ builder.Services.AddIdentityCore<Register>()
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication()
+    .AddCookie(IdentityConstants.ApplicationScheme)
     .AddBearerToken(IdentityConstants.BearerScheme);
 
 builder.Services.AddScoped<INationalRepository, NationalRepository>();
