@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="screen">
+        <div class="screen__content">
+            <form class="register" autocomplete="off" #form="ngForm" (ngSubmit)="onFormRegister()">
+                <div class="register__field">
+                    <i class="register__icon fas fa-user"></i>
+                    <input type="text" class="form-control" class="register__input" name="email" [(ngModel)]="model.email" placeholder="Please Enter Email" id="email">
+                </div>
+                <div class="register__field">
+                    <i class="register__icon fas fa-lock"></i>
+                    <input type="password" class="form-control" class="register__input" name="password" [(ngModel)]="model.password" placeholder="Password" id="password">
+                </div>
+                <!--<div class="register__field">
+                    <i class="register__icon fas fa-lock"></i>
+                    <input type="text" class="form-control" class="register__input" name="iDNum" [(ngModel)]="model.iDNum" placeholder="Id Number" id="iDNum">
+                </div>
+                <div class="register__field">
+                    <i class="register__icon fas fa-lock"></i>
+                    <input type="text" class="form-control" class="register__input" name="name" [(ngModel)]="model.name" placeholder="Name" id="name">
+                </div>
+                <div class="register__field">
+                    <i class="register__icon fas fa-lock"></i>
+                    <input type="text" class="form-control" class="register__input" name="surname" [(ngModel)]="model.surname" placeholder="Surname" id="surname">
+                </div>-->
+                <button class="button register__submit">
+                    <span class="button__text"> Register </span>
+                    <i class="button__icon fas fa-chevron-right"></i>
+                </button>
+            </form>
+        </div>
+        <div class="screen__background">
+            <span class="screen__background__shape screen__background__shape4"></span>
+            <span class="screen__background__shape screen__background__shape3"></span>
+            <span class="screen__background__shape screen__background__shape2"></span>
+            <span class="screen__background__shape screen__background__shape1"></span>
+        </div>
+    </div>
+</div>
+

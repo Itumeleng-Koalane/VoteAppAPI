@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VoteAppAPI.Data.DBContext;
 using VoteAppAPI.Domain_Model;
 using VoteAppAPI.Models.DTOs;
@@ -33,7 +34,7 @@ namespace VoteAppAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Provincial>> GetProvince(Guid id)
+        public async Task<ActionResult<Provincial>> GetProvince([FromRoute]Guid id)
         {
             var province = await voteAppDBContext.Provinces.FindAsync(id);
 
@@ -53,7 +54,7 @@ namespace VoteAppAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProvincial(CreateProvincialRequestDto requestDto)
+        public async Task<IActionResult> CreateProvincial([FromBody]CreateProvincialRequestDto requestDto)
         {
             var province = new Provincial()
             {
@@ -76,6 +77,63 @@ namespace VoteAppAPI.Controllers
             logger.LogError($"Could not create {requestDto.Name} based on: {response}");
 
             return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Register>> RemoveUser(Guid id)
+        {
+            var singleUser = await voteAppDBContext.Provinces.FindAsync(id);
+            try
+            {
+                if (singleUser == null)
+                {
+                    return NotFound();
+                }
+
+                voteAppDBContext.Provinces.Remove(singleUser);
+                await voteAppDBContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Could not remove the user {singleUser} based on: " + ex.StackTrace);
+            }
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] Register updatedUser)
+        {
+            var user = await voteAppDBContext.Provinces.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties of the found entity with the values from the input model
+            user.Name = updatedUser.Name;
+            user.IdentificationNumber = updatedUser.IdentificationNumber;
+            user.Surname = updatedUser.Surname;
+
+            voteAppDBContext.Entry(user).State = EntityState.Modified;
+
+            try
+            {
+                await voteAppDBContext.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!voteAppDBContext.Provinces.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    logger.LogError($"Failed to create registration for user {user}:");
+                    logger.LogInformation($"{user.IdentificationNumber}");
+                }
+            }
+            return NoContent();
         }
     }
 }
