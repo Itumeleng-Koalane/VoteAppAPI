@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VoteAppAPI.Data.DBContext;
 
@@ -11,9 +12,11 @@ using VoteAppAPI.Data.DBContext;
 namespace VoteAppAPI.Migrations
 {
     [DbContext(typeof(RegisterAuthDBContext))]
-    partial class RegisterAuthDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240928204115_UpdatedUserRegistrationColumns")]
+    partial class UpdatedUserRegistrationColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
