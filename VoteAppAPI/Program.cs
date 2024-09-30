@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using VoteAppAPI.Data.DBContext;
 using VoteAppAPI.Domain_Model;
@@ -25,19 +26,24 @@ builder.Services.AddDbContext<RegisterAuthDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("VoteAppConnectionString"));
 });
 
-builder.Services.AddIdentityCore<Register>()
+builder.Services.AddIdentityApiEndpoints<Register>()
     .AddEntityFrameworkStores<RegisterAuthDBContext>()
     .AddDefaultTokenProviders()
     .AddApiEndpoints();
 
+//builder.Services.Configure<IdentityOptions>(options =>
+//{
+//    options.User.RequireUniqueEmail = true;
+//});
+
 builder.Services.AddAuthorization();
-builder.Services.AddAuthentication()
-    .AddCookie(IdentityConstants.ApplicationScheme)
-    .AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddAuthentication();
+    //.AddCookie(IdentityConstants.ApplicationScheme)
+    //.AddBearerToken(IdentityConstants.BearerScheme);
 
 builder.Services.AddScoped<INationalRepository, NationalRepository>();
 builder.Services.AddScoped<IProvincialRepository, ProvincialRepository>();
-builder.Services.AddScoped<IRegistrationRepository, RegisterRepository>();
+//builder.Services.AddScoped<IRegistrationRepository, RegisterRepository>();
 
 var app = builder.Build();
 
@@ -66,6 +72,40 @@ app.UseAuthentication();
 
 app.MapControllers();
 
-app.MapIdentityApi<Register>();
+app.MapGroup("/api")
+    .MapIdentityApi<Register>();
+
+app.MapPost("/api/signup", async (UserManager<Register> UserManager,[FromBody] UserRegistrationModel userRegistrationModel)
+    =>
+    {
+        Register registerUser = new Register()
+        {
+            UserName = userRegistrationModel.Email,
+            Email = userRegistrationModel.Email,
+            IdentificationNumber = userRegistrationModel.IdentificationNumber,
+            Name = userRegistrationModel.Name,
+            Surname = userRegistrationModel.Surname,
+        };
+
+        var result = await UserManager.CreateAsync(registerUser, userRegistrationModel.Password);
+
+        if(result.Succeeded)
+        {
+            return Results.Ok(result);
+        }
+        else
+        {
+            return Results.BadRequest(result);
+        }
+    });
 
 app.Run();
+
+public class UserRegistrationModel
+{
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public string IdentificationNumber { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+}

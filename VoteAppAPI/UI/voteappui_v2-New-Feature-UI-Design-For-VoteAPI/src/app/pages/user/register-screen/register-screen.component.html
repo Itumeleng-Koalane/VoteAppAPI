@@ -1,0 +1,32 @@
+<div class="mb-4 h2 text-success">
+    Register Here
+</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class ="mb-3">
+        <input class="form-control bg-body-secondary" placeholder="Name" formControlName="name">
+        <!--<div class="error-feedback" *ngIf="hasDisplayableError('name') && form.controls.name.hasError(required)">
+            Please enter your name!
+        </div>-->
+    </div>
+    <div class ="mb-3">
+        <input class="form-control bg-body-secondary" placeholder="Surname" formControlName="surname">
+    </div>
+    <div class ="mb-3">
+        <input class="form-control bg-body-secondary" placeholder="Email" formControlName="email">
+    </div>
+    <div class ="mb-3">
+        <input class="form-control bg-body-secondary" placeholder="ID Number" formControlName="identificationNum">
+    </div>
+    <div class ="mb-3">
+        <input type="password" class="form-control bg-body-secondary" placeholder="Password" formControlName="password">
+    </div>
+    <div class ="mb-3">
+        <input type="password" class="form-control bg-body-secondary" placeholder="Confirm Password" formControlName="confirmPassword">
+    </div>
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success w-100 rounded-3">
+            Register
+        </button>
+    </div>
+</form>
+
