@@ -1,12 +1,42 @@
-<div class="mb-4 h2 text-success">
-    Login
+<div class="mb-4">
+    <h2 class="text-success">
+        Login
+    </h2>
+    <div>Don't have an account?
+        <a routerLink="/pages/user/register-screen" class="text-decoration-none fw-medium text-success d-inline-block">
+            Register
+        </a>
+    </div>
 </div>
-<form [formGroup]="form" (ngSubmit)="onLogin()">
+<form [formGroup]="form" autocomplete="off" (ngSubmit)="onLogin()">
     <div class ="mb-3">
-        <input class="form-control bg-body-secondary" placeholder="Email" formControlName="email">
+        <input class="form-control bg-body-secondary" placeholder="Email" name="email" id="email" formControlName="email">
+        <div class="error-feedback" *ngIf="hasDisplayableError('email')">
+            <ng-container [ngSwitch]="form.get('email')?.errors | firstKey">
+                <div *ngSwitchCase="'required'">
+                    Please enter your email address!
+                </div>
+                <div *ngSwitchCase="'email'">
+                    Please enter a valid email address!
+                </div>
+            </ng-container>
+        </div>
     </div>
     <div class ="mb-3">
-        <input type="password" class="form-control bg-body-secondary" placeholder="Password" formControlName="password">
+        <input type="password" class="form-control bg-body-secondary" id="password" name="password" placeholder="Password" formControlName="password">
+        <div class="error-feedback" *ngIf="hasDisplayableError('password')">
+            <ng-container [ngSwitch]="form.get('password')?.errors | firstKey">
+                <div *ngSwitchCase="'required'">
+                    Please enter your password!
+                </div>
+                <div *ngSwitchCase="'minlength'">
+                    Password must be atleast 6 characters long!
+                </div>
+                <div *ngSwitchCase="'pattern'">
+                    Password must be contain atleast 1 special character!
+                </div>
+            </ng-container>
+        </div>
     </div>
     <div class="mt-4">
         <button type="submit" class="btn btn-success w-100 rounded-3">

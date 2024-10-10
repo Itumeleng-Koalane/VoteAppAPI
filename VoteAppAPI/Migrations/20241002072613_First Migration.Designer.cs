@@ -12,8 +12,8 @@ using VoteAppAPI.Data.DBContext;
 namespace VoteAppAPI.Migrations
 {
     [DbContext(typeof(RegisterAuthDBContext))]
-    [Migration("20240928204115_UpdatedUserRegistrationColumns")]
-    partial class UpdatedUserRegistrationColumns
+    [Migration("20241002072613_First Migration")]
+    partial class FirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,8 +174,9 @@ namespace VoteAppAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
