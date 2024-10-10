@@ -8,8 +8,7 @@ namespace VoteAppAPI.Domain_Model
     {
         [PersonalData]
         [Column(TypeName = "nvarchar(13)")]
-        public string Email { get; set; }
-        public string IdentificationNumber { get; set; }
+        public string? IdentificationNumber { get; set; }
         [PersonalData]
         [Column(TypeName = "nvarchar(150)")]
         public string Name { get; set; }
