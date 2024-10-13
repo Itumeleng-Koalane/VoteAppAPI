@@ -2,18 +2,19 @@ body {
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align items to the start of the container */
+    align-items: flex-start;
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
 }
 
 .container {
-    display: flex;
-    justify-content: center; /* Center cards horizontally */
-    align-items: center; /* Align cards vertically within the container */
-    gap: 20px; /* Space between the cards */
-    margin-top: 8%; /* Add margin-top to push content down */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create 3 columns */
+    grid-gap: 20px; /* Space between the cards */
+    justify-content: center;
+    margin-top: 4%; /* Add margin-top to push content down */
+    padding: 20px; /* Optional: Adds padding around the grid */
 }
 
 .card {
@@ -21,14 +22,15 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 500px;
+    width: 100%; /* Full width of the grid column */
+    max-width: 400px; /* Optional: Control max width of each card */
 }
 
 .card-image {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff; /* Set white background color */
+    background-color: #fff;
     height: 300px;
     padding: 10px; /* Optional: Adds padding around the image */
 }
@@ -44,25 +46,6 @@ body {
     padding: 20px;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-}
-
 button {
     width: 100%;
     padding: 10px;
@@ -75,7 +58,20 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #1eb300;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        grid-template-columns: 1fr; /* 1 card per row on small screens */
+    }
 }
 
 .footer-bottom {
@@ -91,3 +87,4 @@ button:hover {
 .footer-bottom p {
     margin: 0px 0;
 }
+

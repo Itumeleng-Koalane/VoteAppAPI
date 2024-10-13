@@ -3,6 +3,8 @@ import { LoginScreenComponent } from './pages/user/login-screen/login-screen.com
 import { RegisterScreenComponent } from './pages/user/register-screen/register-screen.component';
 import { UserComponent } from './pages/user/user.component';
 import { LandingScreenComponent } from './pages/landing-screen/landing-screen.component';
+import { ProvincialPartiesComponent } from './pages/provincial-parties/provincial-parties.component';
+import { NationalPartiesComponent } from './pages/national-parties/national-parties.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/pages/user/login-screen', pathMatch: 'full' },
@@ -13,5 +15,7 @@ export const routes: Routes = [
       { path: 'login-screen', component: LoginScreenComponent }, 
     ]
   },
+  //{ path: 'pages/provincial-parties', component: ProvincialPartiesComponent},
+  //{ path: 'pages/national-parties', component: NationalPartiesComponent }
 ];
 
