@@ -15,7 +15,7 @@ export const routes: Routes = [
       { path: 'login-screen', component: LoginScreenComponent }, 
     ]
   },
-  //{ path: 'pages/provincial-parties', component: ProvincialPartiesComponent},
+  { path: 'pages/landing-screen', component: LandingScreenComponent},
   //{ path: 'pages/national-parties', component: NationalPartiesComponent }
 ];
 
