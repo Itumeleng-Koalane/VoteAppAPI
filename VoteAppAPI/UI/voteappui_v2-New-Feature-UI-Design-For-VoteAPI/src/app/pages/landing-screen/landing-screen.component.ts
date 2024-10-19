@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-landing-screen',
@@ -15,4 +16,11 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class LandingScreenComponent {
 
+  constructor(private router: Router,private toastr: ToastrService){}
+
+  onLogout(){
+    localStorage.removeItem('token');
+    this.toastr.success('Logout succesful!');
+    this.router.navigateByUrl('pages/user/login-screen');
+  }
 }

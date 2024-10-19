@@ -64,19 +64,11 @@ hasDisplayableError(controlName: string): Boolean
     {
       this.regService.loginUser(this.form.value).subscribe({
         next:(res:any)=>{
-          
-          if(res.succeeded)
-          {
             localStorage.setItem('token', res.token);
             this.router.navigateByUrl('pages/landing-screen');
             this.form.reset();
             this.isSubmitted = true;
-            this.toastr.success('User Registration Successful','User registered!');
-          }
-          else
-          {
-            console.log('response', res);
-          }
+            this.toastr.success('User Logged on','Login successful!');
         },
         error:err=>
           {
